@@ -1,0 +1,243 @@
+// Toggle Password Visibility
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const button = input.parentElement.querySelector('.toggle-password');
+    const icon = button.querySelector('i');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+
+// Password Strength Checker
+function checkPasswordStrength(password) {
+    let strength = 0;
+    
+    // Check length
+    if (password.length >= 8) strength += 25;
+    if (password.length >= 12) strength += 25;
+    
+    // Check for lowercase and uppercase
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 25;
+    
+    // Check for numbers
+    if (/\d/.test(password)) strength += 12.5;
+    
+    // Check for special characters
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 12.5;
+    
+    return strength;
+}
+
+// Update Password Strength Bar
+function updatePasswordStrength() {
+    const passwordInput = document.getElementById('regPassword');
+    const strengthBar = document.getElementById('strengthBar');
+    
+    if (!passwordInput || !strengthBar) return;
+    
+    passwordInput.addEventListener('input', function() {
+        const password = this.value;
+        const strength = checkPasswordStrength(password);
+        
+        strengthBar.style.width = strength + '%';
+        
+        // Remove all classes
+        strengthBar.classList.remove('weak', 'medium', 'strong');
+        
+        // Add appropriate class
+        if (strength <= 33) {
+            strengthBar.classList.add('weak');
+        } else if (strength <= 66) {
+            strengthBar.classList.add('medium');
+        } else {
+            strengthBar.classList.add('strong');
+        }
+    });
+}
+
+// Show Message
+function showMessage(message, type = 'success') {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
+    messageDiv.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+        <span>${message}</span>
+    `;
+    
+    const form = document.querySelector('.auth-form');
+    form.insertBefore(messageDiv, form.firstChild);
+    
+    // Remove message after 5 seconds
+    setTimeout(() => {
+        messageDiv.remove();
+    }, 5000);
+}
+
+// Login Form Handler
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const remember = document.querySelector('input[name="remember"]').checked;
+        
+        // Add loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.classList.add('loading');
+        
+        // Simulate API call
+        setTimeout(() => {
+            // Remove loading state
+            submitBtn.classList.remove('loading');
+            
+            // Store user data (in real app, this would be handled by backend)
+            const userData = {
+                email: email,
+                loggedIn: true,
+                timestamp: new Date().getTime()
+            };
+            
+            if (remember) {
+                localStorage.setItem('userData', JSON.stringify(userData));
+            } else {
+                sessionStorage.setItem('userData', JSON.stringify(userData));
+            }
+            
+            showMessage('Login successful! Redirecting...', 'success');
+            
+            // Redirect to home page after 1.5 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }, 1500);
+    });
+}
+
+// Registration Form Handler
+const registerForm = document.getElementById('registerForm');
+if (registerForm) {
+    registerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('regEmail').value;
+        const phone = document.getElementById('phone').value;
+        const password = document.getElementById('regPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const userType = document.getElementById('userType').value;
+        const terms = document.querySelector('input[name="terms"]').checked;
+        
+        // Validate passwords match
+        if (password !== confirmPassword) {
+            showMessage('Passwords do not match!', 'error');
+            return;
+        }
+        
+        // Validate password strength
+        const strength = checkPasswordStrength(password);
+        if (strength < 50) {
+            showMessage('Please use a stronger password!', 'error');
+            return;
+        }
+        
+        // Validate terms
+        if (!terms) {
+            showMessage('Please accept the Terms & Conditions!', 'error');
+            return;
+        }
+        
+        // Add loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.classList.add('loading');
+        
+        // Simulate API call
+        setTimeout(() => {
+            // Remove loading state
+            submitBtn.classList.remove('loading');
+            
+            // Store user data (in real app, this would be handled by backend)
+            const userData = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phone: phone,
+                userType: userType,
+                registeredAt: new Date().toISOString()
+            };
+            
+            localStorage.setItem('registeredUser', JSON.stringify(userData));
+            
+            showMessage('Registration successful! Redirecting to login...', 'success');
+            
+            // Redirect to login page after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        }, 1500);
+    });
+}
+
+// Social Login Handlers
+document.querySelectorAll('.btn-social').forEach(button => {
+    button.addEventListener('click', function() {
+        const provider = this.classList.contains('btn-google') ? 'Google' : 'Facebook';
+        showMessage(`${provider} authentication will be implemented soon!`, 'success');
+    });
+});
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    updatePasswordStrength();
+    
+    // Check if user is already logged in
+    const userData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
+    if (userData && (window.location.pathname.includes('login.html') || window.location.pathname.includes('register.html'))) {
+        // Uncomment to auto-redirect logged-in users
+        // window.location.href = 'index.html';
+    }
+});
+
+// Validate email format
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+// Validate phone number (Indian format)
+function validatePhone(phone) {
+    const re = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,5}[)]?[-\s\.]?[0-9]{4,6}$/;
+    return re.test(phone.replace(/\s/g, ''));
+}
+
+// Real-time validation
+document.querySelectorAll('input[type="email"]').forEach(input => {
+    input.addEventListener('blur', function() {
+        if (this.value && !validateEmail(this.value)) {
+            this.style.borderColor = '#ef4444';
+            showMessage('Please enter a valid email address', 'error');
+        } else {
+            this.style.borderColor = '#e0e0e0';
+        }
+    });
+});
+
+document.querySelectorAll('input[type="tel"]').forEach(input => {
+    input.addEventListener('blur', function() {
+        if (this.value && !validatePhone(this.value)) {
+            this.style.borderColor = '#ef4444';
+            showMessage('Please enter a valid phone number', 'error');
+        } else {
+            this.style.borderColor = '#e0e0e0';
+        }
+    });
+});
