@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Properties - AcreDreams</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="properties.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-home"></i>
+                <span class="logo-text"><span class="logo-acre">Acre</span><span class="logo-dreams">Dreams</span></span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="buy.html">Buy</a></li>
+                <li><a href="rent.html">Rent</a></li>
+                <li><a href="new-projects.html">New Projects</a></li>
+                <li><a href="commercial.html" class="active">Commercial</a></li>
+                <li><a href="plots.html">Plots/Land</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="icon-btn">
+                    <i class="far fa-heart"></i>
+                </button>
+                <a href="login.html" class="icon-btn">
+                    <i class="far fa-user"></i>
+                </a>
+                <a href="login.html" class="btn-primary" style="text-decoration: none;">Post Property</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Commercial Properties</h1>
+            <p>Explore offices, retail spaces, and commercial buildings for your business</p>
+        </div>
+    </section>
+
+    <!-- Commercial Properties Content -->
+    <section class="properties-listing">
+        <div class="container">
+            <div class="properties-grid" id="propertiesGrid">
+                <!-- Commercial Card 1 -->
+                <div class="property-card" data-type="office" data-price="50000000">
+                    <div class="property-badge">Featured</div>
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop" alt="Office Space">
+                        <button class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="property-gallery-indicator">
+                            <i class="fas fa-images"></i> 22
+                        </div>
+                    </div>
+                    <div class="property-details">
+                        <div class="property-price">₹5 Crores</div>
+                        <h3 class="property-title">Premium Office Space in IT Park</h3>
+                        <p class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Electronic City, Bangalore
+                        </p>
+                        <div class="property-features">
+                            <span><i class="fas fa-briefcase"></i> Office</span>
+                            <span><i class="fas fa-users"></i> 100 Seats</span>
+                            <span><i class="fas fa-ruler-combined"></i> 5000 sqft</span>
+                        </div>
+                        <div class="property-amenities">
+                            <span class="amenity-tag"><i class="fas fa-wifi"></i> WiFi</span>
+                            <span class="amenity-tag"><i class="fas fa-car"></i> Parking</span>
+                            <span class="amenity-tag"><i class="fas fa-coffee"></i> Cafeteria</span>
+                        </div>
+                        <div class="property-footer">
+                            <span class="property-age">Ready to Move</span>
+                            <button class="btn-contact">Contact Agent</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Commercial Card 2 -->
+                <div class="property-card" data-type="retail" data-price="35000000">
+                    <div class="property-badge new">New</div>
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&h=400&fit=crop" alt="Retail Space">
+                        <button class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="property-gallery-indicator">
+                            <i class="fas fa-images"></i> 18
+                        </div>
+                    </div>
+                    <div class="property-details">
+                        <div class="property-price">₹3.5 Crores</div>
+                        <h3 class="property-title">Retail Shop in Prime Mall</h3>
+                        <p class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Indiranagar, Bangalore
+                        </p>
+                        <div class="property-features">
+                            <span><i class="fas fa-store"></i> Retail</span>
+                            <span><i class="fas fa-users"></i> High Footfall</span>
+                            <span><i class="fas fa-ruler-combined"></i> 1500 sqft</span>
+                        </div>
+                        <div class="property-amenities">
+                            <span class="amenity-tag"><i class="fas fa-parking"></i> Parking</span>
+                            <span class="amenity-tag"><i class="fas fa-shield-alt"></i> Security</span>
+                            <span class="amenity-tag"><i class="fas fa-street-view"></i> Corner</span>
+                        </div>
+                        <div class="property-footer">
+                            <span class="property-age">Ready to Move</span>
+                            <button class="btn-contact">Contact Agent</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Commercial Card 3 -->
+                <div class="property-card" data-type="warehouse" data-price="80000000">
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=600&h=400&fit=crop" alt="Warehouse">
+                        <button class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="property-gallery-indicator">
+                            <i class="fas fa-images"></i> 15
+                        </div>
+                    </div>
+                    <div class="property-details">
+                        <div class="property-price">₹8 Crores</div>
+                        <h3 class="property-title">Large Warehouse with Logistics</h3>
+                        <p class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Panvel, Mumbai
+                        </p>
+                        <div class="property-features">
+                            <span><i class="fas fa-warehouse"></i> Warehouse</span>
+                            <span><i class="fas fa-truck"></i> Logistics</span>
+                            <span><i class="fas fa-ruler-combined"></i> 25000 sqft</span>
+                        </div>
+                        <div class="property-amenities">
+                            <span class="amenity-tag"><i class="fas fa-truck-loading"></i> Loading</span>
+                            <span class="amenity-tag"><i class="fas fa-shield-alt"></i> Security</span>
+                            <span class="amenity-tag"><i class="fas fa-fire-extinguisher"></i> Fire Safety</span>
+                        </div>
+                        <div class="property-footer">
+                            <span class="property-age">Ready to Move</span>
+                            <button class="btn-contact">Contact Agent</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-home"></i>
+                        <span class="logo-text"><span class="logo-acre">Acre</span><span class="logo-dreams">Dreams</span></span>
+                    </div>
+                    <p>Discover dream homes tailored for you across India</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="buy.html">Buy</a></li>
+                        <li><a href="rent.html">Rent</a></li>
+                        <li><a href="new-projects.html">New Projects</a></li>
+                        <li><a href="commercial.html">Commercial</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AcreDreams. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="properties.js"></script>
+</body>
+</html>
