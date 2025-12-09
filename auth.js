@@ -177,12 +177,15 @@ if (registerForm) {
             
             localStorage.setItem('registeredUser', JSON.stringify(userData));
             
-            showMessage('Registration successful! Redirecting to login...', 'success');
+            // Send welcome email
+            sendWelcomeEmail(userData);
             
-            // Redirect to login page after 2 seconds
+            showMessage('Registration successful! Check your email for confirmation. Redirecting to login...', 'success');
+            
+            // Redirect to login page after 3 seconds
             setTimeout(() => {
                 window.location.href = 'login.html';
-            }, 2000);
+            }, 3000);
         }, 1500);
     });
 }
@@ -241,3 +244,113 @@ document.querySelectorAll('input[type="tel"]').forEach(input => {
         }
     });
 });
+
+// Send Welcome Email Function
+async function sendWelcomeEmail(userData) {
+    // This is a demo function - In production, this should call your backend API
+    // Your backend will handle the actual email sending using services like:
+    // - SendGrid, Mailgun, AWS SES, Nodemailer, etc.
+    
+    const emailData = {
+        to: userData.email,
+        subject: 'Welcome to AcreDreams! 🏡',
+        html: `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <style>
+                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                    .content { background: #f8f9fa; padding: 30px; }
+                    .button { display: inline-block; background: #00BCD4; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+                    .footer { text-align: center; padding: 20px; color: #666; font-size: 14px; }
+                    .features { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+                    .feature-item { padding: 10px 0; border-bottom: 1px solid #e0e0e0; }
+                    .feature-item:last-child { border-bottom: none; }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1>🏡 Welcome to AcreDreams!</h1>
+                    </div>
+                    <div class="content">
+                        <h2>Hello ${userData.firstName} ${userData.lastName}!</h2>
+                        <p>Thank you for joining AcreDreams - your gateway to finding the perfect property!</p>
+                        
+                        <p>We're excited to have you on board. Your account has been successfully created and you can now:</p>
+                        
+                        <div class="features">
+                            <div class="feature-item">✅ Browse thousands of verified properties</div>
+                            <div class="feature-item">✅ Save your favorite listings</div>
+                            <div class="feature-item">✅ Get personalized property recommendations</div>
+                            <div class="feature-item">✅ Connect directly with property agents</div>
+                            <div class="feature-item">✅ Post your own property listings</div>
+                        </div>
+                        
+                        <p style="text-align: center;">
+                            <a href="https://acredreams.com/login" class="button">Start Exploring Properties</a>
+                        </p>
+                        
+                        <p><strong>Your Account Details:</strong></p>
+                        <ul>
+                            <li><strong>Email:</strong> ${userData.email}</li>
+                            <li><strong>Phone:</strong> ${userData.phone}</li>
+                            <li><strong>User Type:</strong> ${userData.userType}</li>
+                            <li><strong>Registered:</strong> ${new Date(userData.registeredAt).toLocaleString()}</li>
+                        </ul>
+                        
+                        <p>If you have any questions or need assistance, our support team is available 24/7.</p>
+                        
+                        <p>Happy house hunting! 🎉</p>
+                        
+                        <p>Best regards,<br>The AcreDreams Team</p>
+                    </div>
+                    <div class="footer">
+                        <p>&copy; 2025 AcreDreams. All rights reserved.</p>
+                        <p>This email was sent to ${userData.email}</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+        `
+    };
+    
+    // In production, you would call your backend API:
+    try {
+        const response = await fetch('http://localhost:3000/api/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(emailData)
+        });
+        
+        if (response.ok) {
+            console.log('✅ Welcome email sent successfully to', userData.email);
+            return true;
+        } else {
+            console.error('❌ Failed to send welcome email');
+            return false;
+        }
+    } catch (error) {
+        console.error('⚠️ Error sending email (Backend may not be running):', error);
+        console.log('💡 To enable emails, start the backend server:');
+        console.log('   cd backend && npm install && npm start');
+        return false;
+    }
+    
+    // For demo purposes, just log the email data
+    console.log('📧 Welcome Email Details:');
+    console.log('To:', emailData.to);
+    console.log('Subject:', emailData.subject);
+    console.log('Email would be sent with full HTML content');
+    
+    // Show a notification that email was sent (demo only)
+    setTimeout(() => {
+        console.log(`✅ Welcome email sent to ${userData.email}`);
+    }, 500);
+    
+    return true;
+}
