@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plots & Land - AcreDreams</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="properties.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-home"></i>
+                <span class="logo-text"><span class="logo-acre">Acre</span><span class="logo-dreams">Dreams</span></span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="buy.html">Buy</a></li>
+                <li><a href="rent.html">Rent</a></li>
+                <li><a href="new-projects.html">New Projects</a></li>
+                <li><a href="commercial.html">Commercial</a></li>
+                <li><a href="plots.html" class="active">Plots/Land</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="icon-btn">
+                    <i class="far fa-heart"></i>
+                </button>
+                <a href="login.html" class="icon-btn">
+                    <i class="far fa-user"></i>
+                </a>
+                <a href="login.html" class="btn-primary" style="text-decoration: none;">Post Property</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Plots & Land</h1>
+            <p>Find the perfect plot to build your dream home or investment land</p>
+        </div>
+    </section>
+
+    <!-- Plots & Land Content -->
+    <section class="properties-listing">
+        <div class="container">
+            <div class="properties-grid" id="propertiesGrid">
+                <!-- Plot Card 1 -->
+                <div class="property-card" data-type="residential" data-price="15000000">
+                    <div class="property-badge">Featured</div>
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=400&fit=crop" alt="Residential Plot">
+                        <button class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="property-gallery-indicator">
+                            <i class="fas fa-images"></i> 12
+                        </div>
+                    </div>
+                    <div class="property-details">
+                        <div class="property-price">₹1.5 Crores</div>
+                        <h3 class="property-title">DTCP Approved Residential Plot</h3>
+                        <p class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Sarjapur Road, Bangalore
+                        </p>
+                        <div class="property-features">
+                            <span><i class="fas fa-vector-square"></i> 2400 sqft</span>
+                            <span><i class="fas fa-road"></i> 30 ft Road</span>
+                            <span><i class="fas fa-check-circle"></i> Clear Title</span>
+                        </div>
+                        <div class="property-amenities">
+                            <span class="amenity-tag"><i class="fas fa-water"></i> Water</span>
+                            <span class="amenity-tag"><i class="fas fa-bolt"></i> Electricity</span>
+                            <span class="amenity-tag"><i class="fas fa-tree"></i> Gated</span>
+                        </div>
+                        <div class="property-footer">
+                            <span class="property-age">DTCP Approved</span>
+                            <button class="btn-contact">Contact Agent</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plot Card 2 -->
+                <div class="property-card" data-type="agricultural" data-price="8000000">
+                    <div class="property-badge new">New</div>
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=600&h=400&fit=crop" alt="Agricultural Land">
+                        <button class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="property-gallery-indicator">
+                            <i class="fas fa-images"></i> 10
+                        </div>
+                    </div>
+                    <div class="property-details">
+                        <div class="property-price">₹80 Lakhs</div>
+                        <h3 class="property-title">Agricultural Farm Land</h3>
+                        <p class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Kanakapura, Bangalore
+                        </p>
+                        <div class="property-features">
+                            <span><i class="fas fa-vector-square"></i> 2 Acres</span>
+                            <span><i class="fas fa-seedling"></i> Fertile</span>
+                            <span><i class="fas fa-water"></i> Borewell</span>
+                        </div>
+                        <div class="property-amenities">
+                            <span class="amenity-tag"><i class="fas fa-tree"></i> Trees</span>
+                            <span class="amenity-tag"><i class="fas fa-tractor"></i> Access</span>
+                            <span class="amenity-tag"><i class="fas fa-check-circle"></i> Legal</span>
+                        </div>
+                        <div class="property-footer">
+                            <span class="property-age">Clear Title</span>
+                            <button class="btn-contact">Contact Agent</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plot Card 3 -->
+                <div class="property-card" data-type="commercial" data-price="50000000">
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop" alt="Commercial Plot">
+                        <button class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <div class="property-gallery-indicator">
+                            <i class="fas fa-images"></i> 15
+                        </div>
+                    </div>
+                    <div class="property-details">
+                        <div class="property-price">₹5 Crores</div>
+                        <h3 class="property-title">Prime Commercial Plot</h3>
+                        <p class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            MG Road, Bangalore
+                        </p>
+                        <div class="property-features">
+                            <span><i class="fas fa-vector-square"></i> 5000 sqft</span>
+                            <span><i class="fas fa-road"></i> Main Road</span>
+                            <span><i class="fas fa-building"></i> Commercial</span>
+                        </div>
+                        <div class="property-amenities">
+                            <span class="amenity-tag"><i class="fas fa-map-marked"></i> Corner</span>
+                            <span class="amenity-tag"><i class="fas fa-bolt"></i> 3 Phase</span>
+                            <span class="amenity-tag"><i class="fas fa-check-circle"></i> Approved</span>
+                        </div>
+                        <div class="property-footer">
+                            <span class="property-age">BBMP Approved</span>
+                            <button class="btn-contact">Contact Agent</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <i class="fas fa-home"></i>
+                        <span class="logo-text"><span class="logo-acre">Acre</span><span class="logo-dreams">Dreams</span></span>
+                    </div>
+                    <p>Discover dream homes tailored for you across India</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="buy.html">Buy</a></li>
+                        <li><a href="rent.html">Rent</a></li>
+                        <li><a href="new-projects.html">New Projects</a></li>
+                        <li><a href="commercial.html">Commercial</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AcreDreams. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="properties.js"></script>
+</body>
+</html>
