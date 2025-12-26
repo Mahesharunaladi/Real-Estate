@@ -114,9 +114,13 @@ if (loginForm) {
             
             showMessage('Login successful! Redirecting...', 'success');
             
-            // Redirect to home page after 1.5 seconds
+            // Check if there's a redirect parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirectTo = urlParams.get('redirect') || 'index.html';
+            
+            // Redirect after 1.5 seconds
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = redirectTo;
             }, 1500);
         }, 1500);
     });
@@ -177,15 +181,23 @@ if (registerForm) {
             
             localStorage.setItem('registeredUser', JSON.stringify(userData));
             
+            // Auto-login after registration
+            const loginData = {
+                email: email,
+                loggedIn: true,
+                timestamp: new Date().getTime()
+            };
+            localStorage.setItem('userData', JSON.stringify(loginData));
+            
             // Send welcome email
             sendWelcomeEmail(userData);
             
-            showMessage('Registration successful! Check your email for confirmation. Redirecting to login...', 'success');
+            showMessage('Registration successful! Check your email for confirmation. Redirecting...', 'success');
             
-            // Redirect to login page after 3 seconds
+            // Redirect to home page after 2 seconds
             setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 3000);
+                window.location.href = 'index.html';
+            }, 2000);
         }, 1500);
     });
 }

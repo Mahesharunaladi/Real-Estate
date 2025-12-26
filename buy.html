@@ -24,13 +24,14 @@
                 <li><a href="plots.html">Plots/Land</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="icon-btn">
+                <a href="wishlist.html" class="icon-btn">
                     <i class="far fa-heart"></i>
-                </button>
-                <a href="login.html" class="icon-btn">
+                    <span class="wishlist-count">0</span>
+                </a>
+                <a href="login.html" class="icon-btn" id="userIcon">
                     <i class="far fa-user"></i>
                 </a>
-                <a href="login.html" class="btn-primary" style="text-decoration: none;">Post Property</a>
+                <a href="javascript:void(0)" class="btn-primary" id="postPropertyBtn" style="text-decoration: none;">Post Property</a>
             </div>
         </div>
     </nav>
@@ -81,6 +82,20 @@
             <!-- Advanced Filters Panel -->
             <div class="advanced-filters" id="advancedFilters">
                 <div class="filters-grid">
+                    <div class="filter-group">
+                        <label>Location</label>
+                        <select id="location">
+                            <option value="">All Locations</option>
+                            <option value="hyderabad">Hyderabad</option>
+                            <option value="bangalore">Bangalore</option>
+                            <option value="mumbai">Mumbai</option>
+                            <option value="delhi">Delhi NCR</option>
+                            <option value="pune">Pune</option>
+                            <option value="chennai">Chennai</option>
+                            <option value="kolkata">Kolkata</option>
+                        </select>
+                    </div>
+
                     <div class="filter-group">
                         <label>Budget Range</label>
                         <div class="range-inputs">
@@ -422,5 +437,6 @@
 
     <script src="script.js"></script>
     <script src="properties.js"></script>
+    <script src="nav-auth.js"></script>
 </body>
 </html>

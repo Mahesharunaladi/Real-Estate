@@ -24,13 +24,14 @@
                 <li><a href="plots.html" class="active">Plots/Land</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="icon-btn">
+                <a href="wishlist.html" class="icon-btn">
                     <i class="far fa-heart"></i>
-                </button>
-                <a href="login.html" class="icon-btn">
+                    <span class="wishlist-count">0</span>
+                </a>
+                <a href="login.html" class="icon-btn" id="userIcon">
                     <i class="far fa-user"></i>
                 </a>
-                <a href="login.html" class="btn-primary" style="text-decoration: none;">Post Property</a>
+                <a href="javascript:void(0)" class="btn-primary" id="postPropertyBtn" style="text-decoration: none;">Post Property</a>
             </div>
         </div>
     </nav>
@@ -203,5 +204,6 @@
 
     <script src="script.js"></script>
     <script src="properties.js"></script>
+    <script src="nav-auth.js"></script>
 </body>
 </html>

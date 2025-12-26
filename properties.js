@@ -239,6 +239,7 @@ document.querySelectorAll('.page-btn').forEach(btn => {
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     updateResultsCount();
+    initializeWishlist();
     
     // Add animation to cards on load
     const observer = new IntersectionObserver(entries => {
@@ -269,3 +270,183 @@ document.querySelectorAll('#minPrice, #maxPrice').forEach(input => {
         });
     }
 });
+
+// Wishlist Integration
+function initializeWishlist() {
+    const wishlist = loadWishlist();
+    updateWishlistUI(wishlist);
+    
+    // Add click handlers to favorite buttons
+    document.querySelectorAll('.favorite-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleWishlist(this);
+        });
+    });
+}
+
+function loadWishlist() {
+    const stored = localStorage.getItem('acredreams_wishlist');
+    return stored ? JSON.parse(stored) : [];
+}
+
+function saveWishlist(wishlist) {
+    localStorage.setItem('acredreams_wishlist', JSON.stringify(wishlist));
+}
+
+function toggleWishlist(button) {
+    const propertyCard = button.closest('.property-card');
+    const propertyData = extractPropertyData(propertyCard);
+    
+    let wishlist = loadWishlist();
+    const existingIndex = wishlist.findIndex(p => p.id === propertyData.id);
+    
+    if (existingIndex > -1) {
+        // Remove from wishlist
+        wishlist.splice(existingIndex, 1);
+        button.classList.remove('active');
+        button.querySelector('i').classList.replace('fas', 'far');
+        showNotification('Removed from wishlist', 'info');
+    } else {
+        // Add to wishlist
+        wishlist.push(propertyData);
+        button.classList.add('active');
+        button.querySelector('i').classList.replace('far', 'fas');
+        showNotification('Added to wishlist!', 'success');
+    }
+    
+    saveWishlist(wishlist);
+    updateWishlistCounter(wishlist);
+}
+
+function extractPropertyData(card) {
+    const img = card.querySelector('.property-image img');
+    const title = card.querySelector('.property-title');
+    const price = card.querySelector('.property-price');
+    const location = card.querySelector('.property-location');
+    const features = card.querySelectorAll('.property-features span');
+    const amenities = card.querySelectorAll('.amenity-tag');
+    const badge = card.querySelector('.property-badge');
+    const age = card.querySelector('.property-age');
+    const gallery = card.querySelector('.property-gallery-indicator');
+    
+    // Generate unique ID from title
+    const id = title ? title.textContent.toLowerCase().replace(/[^a-z0-9]/g, '-') : 'property-' + Date.now();
+    
+    return {
+        id: id,
+        title: title ? title.textContent : 'Property',
+        price: parseFloat(card.dataset.price) || 0,
+        location: location ? location.textContent.trim() : '',
+        image: img ? img.src : '',
+        features: Array.from(features).map(f => f.innerHTML),
+        amenities: Array.from(amenities).map(a => a.innerHTML),
+        badge: badge ? badge.textContent : '',
+        badgeClass: badge ? badge.className.replace('property-badge', '').trim() : '',
+        age: age ? age.textContent : '',
+        gallery: gallery ? gallery.textContent.trim() : '15'
+    };
+}
+
+function updateWishlistUI(wishlist) {
+    document.querySelectorAll('.property-card').forEach(card => {
+        const propertyData = extractPropertyData(card);
+        const isInWishlist = wishlist.some(p => p.id === propertyData.id);
+        const favoriteBtn = card.querySelector('.favorite-btn');
+        
+        if (isInWishlist) {
+            favoriteBtn.classList.add('active');
+            favoriteBtn.querySelector('i').classList.replace('far', 'fas');
+        }
+    });
+    
+    updateWishlistCounter(wishlist);
+}
+
+function updateWishlistCounter(wishlist) {
+    const counters = document.querySelectorAll('.wishlist-count');
+    counters.forEach(counter => {
+        counter.textContent = wishlist.length;
+        if (wishlist.length > 0) {
+            counter.style.display = 'flex';
+        } else {
+            counter.style.display = 'none';
+        }
+    });
+}
+
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+        <span>${message}</span>
+    `;
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'success' ? '#4CAF50' : '#2196F3'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// Add notification animations
+const notifStyle = document.createElement('style');
+notifStyle.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+    }
+
+    .wishlist-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #e74c3c;
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.2rem 0.4rem;
+        border-radius: 50%;
+        min-width: 18px;
+        height: 18px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+`;
+document.head.appendChild(notifStyle);
