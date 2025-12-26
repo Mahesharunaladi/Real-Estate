@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Configure email transporter
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // You can change to 'outlook', 'yahoo', etc.
+    service: 'outlook', // Changed to Outlook for easier setup
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD
