@@ -206,12 +206,16 @@
     
     // View profile function
     window.viewProfile = function() {
-        alert('Profile page will be implemented soon!');
+        window.location.href = 'profile.html';
     };
     
     // View my properties function
     window.viewMyProperties = function() {
-        alert('My Properties page will be implemented soon!');
+        window.location.href = 'profile.html';
+        // After navigation, show properties tab
+        setTimeout(() => {
+            showSection('properties');
+        }, 100);
     };
     
     // Show notification

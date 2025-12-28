@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - AcreDreams</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="properties.css">
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem 0;
+            color: var(--white);
+        }
+
+        .profile-header-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-avatar-section {
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--primary-color);
+            border: 5px solid var(--white);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-upload-btn {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .avatar-upload-btn:hover {
+            background: #00a5bb;
+            transform: scale(1.1);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .profile-email {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .profile-content {
+            padding: 3rem 0;
+            background: var(--bg-light);
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        .profile-sidebar {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--bg-light);
+            color: var(--primary-color);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .sidebar-nav i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .profile-main {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .profile-form {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+        }
+
+        .form-group input:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+
+        .btn-save,
+        .btn-cancel,
+        .btn-edit {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn-save {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-save:hover {
+            background: #00a5bb;
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            background: var(--white);
+            color: var(--text-dark);
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-cancel:hover {
+            border-color: var(--text-gray);
+        }
+
+        .btn-edit {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-edit:hover {
+            background: #00a5bb;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .activity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.3s;
+        }
+
+        .activity-item:hover {
+            background: var(--bg-light);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-time {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .password-section {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .password-section h3 {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        @media (max-width: 968px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-name {
+                font-size: 2rem;
+            }
+
+            .profile-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn-save,
+            .btn-cancel,
+            .btn-edit {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-home"></i>
+                <span class="logo-text"><span class="logo-acre">Acre</span><span class="logo-dreams">Dreams</span></span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="buy.html">Buy</a></li>
+                <li><a href="rent.html">Rent</a></li>
+                <li><a href="new-projects.html">New Projects</a></li>
+                <li><a href="commercial.html">Commercial</a></li>
+                <li><a href="plots.html">Plots/Land</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="wishlist.html" class="icon-btn">
+                    <i class="far fa-heart"></i>
+                    <span class="wishlist-count">0</span>
+                </a>
+                <a href="login.html" class="icon-btn" id="userIcon">
+                    <i class="far fa-user"></i>
+                </a>
+                <a href="javascript:void(0)" class="btn-primary" id="postPropertyBtn" style="text-decoration: none;">Post Property</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <section class="profile-header">
+        <div class="container">
+            <div class="profile-header-content">
+                <div class="profile-avatar-section">
+                    <div class="profile-avatar" id="profileAvatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <button class="avatar-upload-btn" onclick="document.getElementById('avatarInput').click()">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                    <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                </div>
+                <div class="profile-info">
+                    <h1 class="profile-name" id="profileName">User Name</h1>
+                    <p class="profile-email" id="profileEmail">user@email.com</p>
+                    <div class="profile-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span id="memberSince">Member since Jan 2025</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="userLocation">Hyderabad, India</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Content -->
+    <section class="profile-content">
+        <div class="container">
+            <div class="profile-layout">
+                <!-- Sidebar -->
+                <aside class="profile-sidebar">
+                    <ul class="sidebar-nav">
+                        <li><a href="#profile" class="active" onclick="showSection('profile')">
+                            <i class="fas fa-user"></i> Profile Information
+                        </a></li>
+                        <li><a href="#properties" onclick="showSection('properties')">
+                            <i class="fas fa-building"></i> My Properties
+                        </a></li>
+                        <li><a href="#wishlist" onclick="showSection('wishlist')">
+                            <i class="fas fa-heart"></i> Saved Properties
+                        </a></li>
+                        <li><a href="#activity" onclick="showSection('activity')">
+                            <i class="fas fa-clock"></i> Recent Activity
+                        </a></li>
+                        <li><a href="#settings" onclick="showSection('settings')">
+                            <i class="fas fa-cog"></i> Account Settings
+                        </a></li>
+                    </ul>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="profile-main">
+                    <!-- Profile Information Section -->
+                    <div id="profileSection" class="content-section">
+                        <h2 class="section-title"><i class="fas fa-user"></i> Profile Information</h2>
+                        
+                        <form class="profile-form" id="profileForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text" id="firstName" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" id="lastName" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" id="email" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" id="phone" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>User Type</label>
+                                    <select id="userType" disabled>
+                                        <option value="buyer">Buyer</option>
+                                        <option value="seller">Seller</option>
+                                        <option value="agent">Agent</option>
+                                        <option value="owner">Owner</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Location</label>
+                                    <input type="text" id="location" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-actions" id="profileActions">
+                                <button type="button" class="btn-edit" onclick="enableEdit()">
+                                    <i class="fas fa-edit"></i> Edit Profile
+                                </button>
+                            </div>
+
+                            <div class="form-actions" id="editActions" style="display: none;">
+                                <button type="button" class="btn-cancel" onclick="cancelEdit()">Cancel</button>
+                                <button type="submit" class="btn-save">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Password Change Section -->
+                        <div class="password-section">
+                            <h3><i class="fas fa-lock"></i> Change Password</h3>
+                            <form id="passwordForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Current Password</label>
+                                        <input type="password" id="currentPassword">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>New Password</label>
+                                        <input type="password" id="newPassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Confirm New Password</label>
+                                        <input type="password" id="confirmPassword">
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-save">Update Password</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- My Properties Section -->
+                    <div id="propertiesSection" class="content-section" style="display: none;">
+                        <h2 class="section-title"><i class="fas fa-building"></i> My Properties</h2>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <i class="fas fa-building"></i>
+                                <div class="stat-number" id="totalProperties">0</div>
+                                <div class="stat-label">Total Properties</div>
+                            </div>
+                            <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <i class="fas fa-eye"></i>
+                                <div class="stat-number" id="totalViews">0</div>
+                                <div class="stat-label">Total Views</div>
+                            </div>
+                            <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                <i class="fas fa-phone"></i>
+                                <div class="stat-number" id="totalInquiries">0</div>
+                                <div class="stat-label">Inquiries</div>
+                            </div>
+                        </div>
+
+                        <div id="propertiesList">
+                            <p style="text-align: center; color: var(--text-gray); padding: 2rem;">
+                                You haven't posted any properties yet.
+                                <br><br>
+                                <a href="post-property.html" class="btn-save" style="display: inline-block; text-decoration: none;">
+                                    <i class="fas fa-plus"></i> Post Your First Property
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Wishlist Section -->
+                    <div id="wishlistSection" class="content-section" style="display: none;">
+                        <h2 class="section-title"><i class="fas fa-heart"></i> Saved Properties</h2>
+                        <div id="wishlistContent">
+                            <p style="text-align: center; color: var(--text-gray); padding: 2rem;">
+                                You haven't saved any properties yet.
+                                <br><br>
+                                <a href="buy.html" class="btn-save" style="display: inline-block; text-decoration: none;">
+                                    <i class="fas fa-search"></i> Browse Properties
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Activity Section -->
+                    <div id="activitySection" class="content-section" style="display: none;">
+                        <h2 class="section-title"><i class="fas fa-clock"></i> Recent Activity</h2>
+                        <ul class="activity-list" id="activityList">
+                            <!-- Activity items will be loaded here -->
+                        </ul>
+                    </div>
+
+                    <!-- Settings Section -->
+                    <div id="settingsSection" class="content-section" style="display: none;">
+                        <h2 class="section-title"><i class="fas fa-cog"></i> Account Settings</h2>
+                        
+                        <div class="form-group">
+                            <label>Email Notifications</label>
+                            <div style="display: flex; gap: 2rem; margin-top: 0.5rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" id="emailProperty" checked>
+                                    <span>New properties matching my preferences</span>
+                                </label>
+                            </div>
+                            <div style="display: flex; gap: 2rem; margin-top: 0.5rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" id="emailInquiry" checked>
+                                    <span>Inquiries on my properties</span>
+                                </label>
+                            </div>
+                            <div style="display: flex; gap: 2rem; margin-top: 0.5rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" id="emailNewsletter">
+                                    <span>Newsletter and updates</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="margin-top: 2rem;">
+                            <button class="btn-save" onclick="saveSettings()">
+                                <i class="fas fa-save"></i> Save Settings
+                            </button>
+                        </div>
+
+                        <div class="password-section" style="margin-top: 2rem; background: #fff3cd; border: 2px solid #ffc107;">
+                            <h3 style="color: #856404;"><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+                            <p style="color: #856404; margin-bottom: 1rem;">Once you delete your account, there is no going back. Please be certain.</p>
+                            <button class="btn-cancel" style="background: #dc3545; color: white; border: none;" onclick="deleteAccount()">
+                                <i class="fas fa-trash"></i> Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-logo">
+                        <i class="fas fa-home"></i>
+                        <span class="logo-acre">Acre</span><span class="logo-dreams">Dreams</span>
+                    </h3>
+                    <p>Your trusted partner in finding the perfect property. We make real estate simple and accessible.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="buy.html">Buy Property</a></li>
+                        <li><a href="rent.html">Rent Property</a></li>
+                        <li><a href="new-projects.html">New Projects</a></li>
+                        <li><a href="commercial.html">Commercial</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AcreDreams. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="profile.js"></script>
+    <script src="nav-auth.js"></script>
+</body>
+</html>
