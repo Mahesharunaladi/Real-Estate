@@ -151,9 +151,20 @@ if (loginForm) {
             
             showMessage('Login successful! Redirecting...', 'success');
             
-            // Check if there's a redirect parameter
+            // Determine redirect based on user type
+            let redirectTo = 'index.html'; // Default for buyers
+            
+            if (registeredUser.userType === 'seller' || registeredUser.userType === 'both') {
+                redirectTo = 'seller-dashboard.html';
+            } else if (registeredUser.userType === 'agent') {
+                redirectTo = 'agent-dashboard.html';
+            }
+            
+            // Check if there's a manual redirect parameter (override)
             const urlParams = new URLSearchParams(window.location.search);
-            const redirectTo = urlParams.get('redirect') || 'index.html';
+            if (urlParams.get('redirect')) {
+                redirectTo = urlParams.get('redirect');
+            }
             
             // Redirect after 1.5 seconds
             setTimeout(() => {
@@ -250,9 +261,18 @@ if (registerForm) {
             
             showMessage('Registration successful! Check your email for confirmation. Redirecting...', 'success');
             
-            // Redirect to home page after 2 seconds
+            // Determine redirect based on user type (same logic as login)
+            let redirectTo = 'index.html'; // Default for buyers
+            
+            if (userType === 'seller' || userType === 'both') {
+                redirectTo = 'seller-dashboard.html';
+            } else if (userType === 'agent') {
+                redirectTo = 'agent-dashboard.html';
+            }
+            
+            // Redirect after 2 seconds
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = redirectTo;
             }, 2000);
         }, 1500);
     });

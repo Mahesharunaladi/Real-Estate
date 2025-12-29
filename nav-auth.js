@@ -206,16 +206,31 @@
     
     // View profile function
     window.viewProfile = function() {
-        window.location.href = 'profile.html';
+        // Get user type and redirect to appropriate dashboard
+        const registeredUser = JSON.parse(localStorage.getItem('registeredUser') || '{}');
+        
+        if (registeredUser.userType === 'seller' || registeredUser.userType === 'both') {
+            window.location.href = 'seller-dashboard.html';
+        } else if (registeredUser.userType === 'agent') {
+            window.location.href = 'agent-dashboard.html';
+        } else {
+            window.location.href = 'profile.html';
+        }
     };
     
     // View my properties function
     window.viewMyProperties = function() {
-        window.location.href = 'profile.html';
-        // After navigation, show properties tab
-        setTimeout(() => {
-            showSection('properties');
-        }, 100);
+        const registeredUser = JSON.parse(localStorage.getItem('registeredUser') || '{}');
+        
+        if (registeredUser.userType === 'seller' || registeredUser.userType === 'both') {
+            window.location.href = 'seller-dashboard.html';
+        } else {
+            window.location.href = 'profile.html';
+            // After navigation, show properties tab
+            setTimeout(() => {
+                showSection('properties');
+            }, 100);
+        }
     };
     
     // Show notification
