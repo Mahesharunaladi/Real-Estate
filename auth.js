@@ -90,6 +90,19 @@ if (loginForm) {
         const password = document.getElementById('password').value;
         const remember = document.querySelector('input[name="remember"]').checked;
         
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showMessage('Please enter a valid email address!', 'error');
+            return;
+        }
+        
+        // Validate password is not empty
+        if (!password || password.trim() === '') {
+            showMessage('Please enter your password!', 'error');
+            return;
+        }
+        
         // Add loading state
         const submitBtn = this.querySelector('button[type="submit"]');
         submitBtn.classList.add('loading');
@@ -99,9 +112,33 @@ if (loginForm) {
             // Remove loading state
             submitBtn.classList.remove('loading');
             
-            // Store user data (in real app, this would be handled by backend)
+            // Get registered user data
+            const registeredUser = JSON.parse(localStorage.getItem('registeredUser') || '{}');
+            const storedPassword = localStorage.getItem('userPassword_' + email);
+            
+            // Check if user exists
+            if (!registeredUser.email) {
+                showMessage('No account found. Please register first!', 'error');
+                return;
+            }
+            
+            // Verify email matches
+            if (registeredUser.email !== email) {
+                showMessage('Invalid email or password!', 'error');
+                return;
+            }
+            
+            // Verify password matches
+            if (!storedPassword || storedPassword !== password) {
+                showMessage('Invalid email or password!', 'error');
+                return;
+            }
+            
+            // Store user data (login successful)
             const userData = {
                 email: email,
+                firstName: registeredUser.firstName,
+                lastName: registeredUser.lastName,
                 loggedIn: true,
                 timestamp: new Date().getTime()
             };
@@ -169,6 +206,19 @@ if (registerForm) {
             // Remove loading state
             submitBtn.classList.remove('loading');
             
+            // Check if email already exists
+            const existingUser = localStorage.getItem('registeredUser');
+            if (existingUser) {
+                const existing = JSON.parse(existingUser);
+                if (existing.email === email) {
+                    showMessage('An account with this email already exists! Please login.', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                    return;
+                }
+            }
+            
             // Store user data (in real app, this would be handled by backend)
             const userData = {
                 firstName: firstName,
@@ -181,9 +231,15 @@ if (registerForm) {
             
             localStorage.setItem('registeredUser', JSON.stringify(userData));
             
+            // Store password separately (in real app, this would be hashed on backend)
+            // Using email as key to associate password with user
+            localStorage.setItem('userPassword_' + email, password);
+            
             // Auto-login after registration
             const loginData = {
                 email: email,
+                firstName: firstName,
+                lastName: lastName,
                 loggedIn: true,
                 timestamp: new Date().getTime()
             };
@@ -366,3 +422,46 @@ async function sendWelcomeEmail(userData) {
     
     return true;
 }
+
+// Utility function to clear old/test accounts (for development)
+function clearTestAccounts() {
+    const confirmation = confirm('This will clear all stored accounts. Are you sure?');
+    if (confirmation) {
+        // Get all localStorage keys
+        const keys = Object.keys(localStorage);
+        
+        // Remove user-related data
+        keys.forEach(key => {
+            if (key.startsWith('userPassword_') || 
+                key === 'registeredUser' || 
+                key === 'userData') {
+                localStorage.removeItem(key);
+            }
+        });
+        
+        sessionStorage.clear();
+        alert('All accounts cleared! You can now register again.');
+        window.location.href = 'register.html';
+    }
+}
+
+// Add to window for debugging
+if (typeof window !== 'undefined') {
+    window.clearTestAccounts = clearTestAccounts;
+    window.checkStoredCredentials = function() {
+        const user = JSON.parse(localStorage.getItem('registeredUser') || '{}');
+        if (user.email) {
+            console.log('📧 Registered Email:', user.email);
+            console.log('🔒 Password Key:', 'userPassword_' + user.email);
+            console.log('✅ Password Exists:', !!localStorage.getItem('userPassword_' + user.email));
+            console.log('👤 User Data:', user);
+        } else {
+            console.log('❌ No registered user found');
+        }
+    };
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updatePasswordStrength();
+});
